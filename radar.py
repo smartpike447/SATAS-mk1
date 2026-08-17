@@ -16,22 +16,22 @@ def generate_channel_map(num_channels):
     """Creates geometric 2D target maps based on native speaker layouts."""
     cmap = {}
     if num_channels <= 2:
-        cmap[0] = -90  # Left Speaker
-        cmap[1] = 90   # Right Speaker
+        cmap[0] = -90  # Audio Channel Index 0 -> Left Hemisphere (-90°)
+        cmap[1] = 90   # Audio Channel Index 1 -> Right Hemisphere (+90°)
     elif num_channels <= 6:
         cmap[0] = -30  # Front Left
         cmap[1] = 30   # Front Right
         cmap[2] = 0    # Center
-        cmap[3] = -110 # Rear Left
-        cmap[4] = 110  # Rear Right
+        cmap[4] = -110 # Rear Left
+        cmap[5] = 110  # Rear Right
     else:
         cmap[0] = -30  
         cmap[1] = 30   
         cmap[2] = 0    
-        cmap[3] = -90  # Side Left
-        cmap[4] = 90   # Side Right
-        cmap[5] = -150 # Rear Left
-        cmap[6] = 150  # Rear Right
+        cmap[4] = -90  # Side Left
+        cmap[5] = 90   # Side Right
+        cmap[6] = -150 # Rear Left
+        cmap[7] = 150  # Rear Right
     return cmap
 
 def universal_audio_loop():
@@ -52,7 +52,6 @@ def universal_audio_loop():
     calibration_frames = 0
     calibration_buffer = []
 
-    # Safe fallback wrapper to catch under-allocated hardware targets
     with mic.recorder(samplerate=SAMPLE_RATE, channels=detected_channels) as recorder, \
          speaker.player(samplerate=SAMPLE_RATE, channels=detected_channels) as player:
 
